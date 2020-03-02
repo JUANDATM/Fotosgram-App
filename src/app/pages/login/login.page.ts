@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { IonSlides, NavController } from '@ionic/angular';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -7,6 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
 
   avatars = [
     {
@@ -43,18 +46,54 @@ export class LoginPage implements OnInit {
     },
 ];
 
-  constructor() { }
+
+avatarSlide = {
+  slidesPerView : 3.5
+};
+
+loginUser = {
+  email: 'juan@m.com',
+  password: 'hola123'
+};
+
+  constructor( private usuarioService: UsuarioService,
+               private navCtrl: NavController) { }
 
   ngOnInit() {
-  }
-  
-  login(fLogin: NgForm) {
-      console.log(fLogin.valid);
+    this.slides.lockSwipes(true);
   }
 
-  registro(fRegistro: NgForm){
+ async login(fLogin: NgForm) {
+    if (fLogin.invalid) {return; }
+    const valido = await this.usuarioService.login(this.loginUser.email, this.loginUser.password);
+
+    if (valido) {
+      //navegar al tabs
+      this.navCtrl.navigateRoot('/main/tabs/tab1',{animated: true});
+    }else{
+      //mostrar alerta de usuaio o contraseña no correctos
+    }
+  }
+
+  registro(fRegistro: NgForm) {
     console.log(fRegistro.valid);
 
+  }
+
+  seleccionarAvatar(avatar) {
+    this.avatars.forEach( av => av.seleccionado = false);
+    avatar.seleccionado = true;
+  }
+
+  mostrarRegistro() {
+     this.slides.lockSwipes(false);
+     this.slides.slideTo(0);
+     this.slides.lockSwipes(true);
+  }
+  mostrarLogin() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+    this.slides.lockSwipes(true);
   }
 
 }
