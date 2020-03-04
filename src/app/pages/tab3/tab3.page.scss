@@ -1,3 +1,16 @@
 ion-content ion-toolbar {
-  --background: translucent;
+    --background: translucent;
+}
+
+.img-avatar {
+    width: 150px;
+}
+
+.top-20 {
+    margin-top: 20px;
+    text-align: center !important;
+}
+
+.texto-centrado {
+    text-align: center !important;
 }

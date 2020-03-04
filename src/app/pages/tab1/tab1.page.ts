@@ -17,11 +17,14 @@ export class Tab1Page implements OnInit {
 
 ngOnInit() {
   this.siguientes();
+  this.postsService.nuevoPost.subscribe(post =>{
+    this.posts.unshift(post);
+  }); 
 }
 
 
-recargar(event ) {
-this.siguientes(event . true);
+recargar( event ) {
+this.siguientes(event , true);
 this.habilitado = true;
 this.posts = [];
 }
