@@ -19,7 +19,7 @@ ngOnInit() {
   this.siguientes();
   this.postsService.nuevoPost.subscribe(post =>{
     this.posts.unshift(post);
-  }); 
+  });
 }
 
 
@@ -28,18 +28,23 @@ this.siguientes(event , true);
 this.habilitado = true;
 this.posts = [];
 }
-
 siguientes(event?, pull: boolean = false) {
+ 
   this.postsService.getPosts(pull)
-    .subscribe( resp => {
-       console.log( resp );
-       this.posts.push(...resp.posts );
-       if (event) {
-         event.target.complete();
-         if (resp.posts.length === 0) {
-           this.habilitado = false;
-         }
-       }
-  });
+    .subscribe((resp: any) => {
+      console.log(resp);
+      this.posts.push(...resp.posts);
+      // Array.prototype.push.apply(this.posts, resp.posts);
+
+      if (event) {
+        event.target.complete();
+
+        if (resp.posts.length === 0) {
+          this.habilitado = false;
+        }
+      }
+
+    });
+
 }
 }
