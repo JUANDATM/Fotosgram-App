@@ -11,6 +11,10 @@ import { IonicStorageModule } from '@ionic/storage';
 
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+
+
 
 
 
@@ -21,11 +25,19 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicStorageModule.forRoot() , IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    IonicStorageModule.forRoot() ,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     Geolocation,
+    Camera,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

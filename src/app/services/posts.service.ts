@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { RespuestaPosts, Post } from '../pages/interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 const URL = environment.url;
 
@@ -18,7 +20,7 @@ export class PostsService {
 
 
 
-  constructor(private http: HttpClient, private usuarioService: UsuarioService) { }
+  constructor(private http: HttpClient, private usuarioService: UsuarioService, private fileTransfer: FileTransfer) { }
 
   getPosts(pull: boolean = false) {
     if (pull) {
@@ -41,7 +43,21 @@ export class PostsService {
         resolve(true);
       });
     });
+  }
 
+  subirImagen(img: string){
+    const options: FileUploadOptions = {
+      fileKey: 'image',
+      headers: {
+        'x-token': this.usuarioService.token
+      }
+    };
 
+    const fileTransefer: FileTransferObject = this.fileTransfer.create();
+    fileTransefer.upload( img, `${ URL }/posts/upload`, options ).then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.log('error en cargar', err);
+    });
   }
 }
