@@ -56,18 +56,18 @@ avatarSlide = {
 
   ngOnInit() {
     this.avatars.forEach(avatar => avatar.seleccionado = false);
-    for(const avatar of this.avatars){
+    for (const avatar of this.avatars) {
       if (avatar.img === this.avatarActual) {
         avatar.seleccionado = true;
         break;
       }
     }
     }
-    
-  seleccionarAvatar(avatar){
+
+  seleccionarAvatar(avatar) {
     this.avatars.forEach( av => av.seleccionado = false);
     avatar.seleccionado = true;
-    
+
     this.avatarSel.emit(avatar.img);
   }
 

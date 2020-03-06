@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 declare var mapboxgl: any;
 
@@ -7,21 +7,18 @@ declare var mapboxgl: any;
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.scss'],
 })
-export class MapaComponent implements OnInit {
+export class MapaComponent implements OnInit, AfterViewInit {
+
   @Input() coords: string;
-  @ViewChild('mapa', {static: false}) mapa;
+  @ViewChild('mapa', {static: false}) mapa: ElementRef;
   constructor() { }
-
-  ngOnInit() {
-    console.log(this.coords);
-
+  ngAfterViewInit(): void {
     const latLng = this.coords.split(',');
     const lat = Number(latLng[0]);
     const lng = Number(latLng[1]);
-
     mapboxgl.accessToken = 'pk.eyJ1IjoianVhbmRhdG0iLCJhIjoiY2s3ZjM2aGZiMGVzazNkb2Jkejk1MTUxeiJ9.tVWdv-SEKzjsFFisJArqwg';
     const map = new mapboxgl.Map({
-    container: this.mapa.nativeElement ,
+    container: this.mapa.nativeElement,
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [lng, lat],
     zoom: 15
@@ -29,4 +26,6 @@ export class MapaComponent implements OnInit {
     const marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
   }
 
+  ngOnInit() {
+  }
 }
