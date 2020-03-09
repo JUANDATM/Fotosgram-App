@@ -17,6 +17,9 @@
     <ion-slides *ngIf="post.imgs.length === 1" [options]="slideSoloOpts">
         <ion-slide class="image-slide " [style]=" (post.imgs[0] | imagen: post.usuario._id) | domSanitazer "></ion-slide>
     </ion-slides>
+
+
+
     <!-- MAPA -->
     <app-mapa [coords]="post.coords" *ngIf="post.coords"></app-mapa>
 
