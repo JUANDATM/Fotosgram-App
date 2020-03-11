@@ -17,9 +17,6 @@ export class PostsService {
 
   nuevoPost = new EventEmitter<Post>();
 
-
-
-
   constructor(private http: HttpClient, private usuarioService: UsuarioService, private fileTransfer: FileTransfer) { }
 
   getPosts(pull: boolean = false) {
@@ -30,7 +27,6 @@ export class PostsService {
     this.paginaPosts ++;
     return this.http.get<RespuestaPosts>(`${URL}/posts/?pagina=${this.paginaPosts}`);
   }
-
 
   crearPost( post){
     const headers = new HttpHeaders({
